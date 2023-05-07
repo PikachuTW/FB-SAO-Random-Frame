@@ -23,5 +23,6 @@ module.exports = {
         'no-nested-ternary': 'off',
         indent: ['warn', 4],
         'no-plusplus': ['warn', { allowForLoopAfterthoughts: true }],
+        'no-promise-executor-return': 'off',
     },
 };
