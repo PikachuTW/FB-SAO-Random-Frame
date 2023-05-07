@@ -12,6 +12,9 @@ const output = 'screenshot/image.png';
 const videoDir = 'sao'; // change to the video dictionary
 
 const takeScreenshot = async (videoPath, time) => {
+    if (fs.readdirSync('screenshot').length > 0) {
+        await promisify(exec)(`rm ${output}`);
+    }
     await promisify(exec)(`ffmpeg -ss ${time} -i "${videoPath}" -vframes 1 -q:v 2 ${output}`);
     return output;
 };
@@ -28,6 +31,7 @@ const formatTime = (seconds) => {
 
 const readFiles = async () => {
     const files = fs.readdirSync(videoDir)
+        .filter((file) => file.includes('-'))
         .map(async (file) => {
             const name = file.slice(0, -4);
             const videoPath = path.join(videoDir, file);
@@ -57,8 +61,8 @@ const repeat = async () => {
 const main = async () => {
     data = await readFiles();
     await repeat();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    main();
+    await new Promise((resolve) => setTimeout(resolve, 600000));
+    await main();
 };
 
 main();
