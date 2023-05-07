@@ -57,7 +57,8 @@ const repeat = async () => {
 const main = async () => {
     data = await readFiles();
     await repeat();
-    setInterval(repeat, 1000 * 60 * 10);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    main();
 };
 
 main();
